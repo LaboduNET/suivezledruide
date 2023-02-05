@@ -9,16 +9,24 @@ const too="wewe"
 const supabaseAnonKey = import.meta.env.SUPABASE_ANON_KEY
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey)
-//console.log(supabase);
+console.log(supabase);
 
+try {
 let { data: outings, error } = await supabase
   .from('outings')
   .select('*')
 
   //console.log(outings);
----
+}
+catch(e)
+{
+  //outings = new [{"title":"titre1"}]
+  console.log(e);
+}
+  ---
 
 
 <ul>
-{outings.map(post => <li>{post.title}</li>)}
+
+toto
 </ul>

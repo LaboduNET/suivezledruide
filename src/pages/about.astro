@@ -1,0 +1,115 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+import ContactCTA from '../components/ContactCTA.astro';
+import Hero from '../components/Hero.astro';
+---
+
+<BaseLayout title="About | Suivez le druide" description="A propos de notre collectif">
+	<div class="stack gap-20">
+		<main class="wrapper about">
+			<Hero
+				title="About"
+				tagline="Partez à la découverte de l'étonnante diversité des plantes sauvages qui poussent entre les pavés, grimpent aux murs, sous les haies et rampent sous nos pieds."
+			>
+				<img
+					width="1553"
+					height="873"
+					src="/assets/nat1.jpg"
+					alt="Jeanine White at work with a colleague"
+				/>
+			</Hero>
+
+			<section>
+				<h2 class="section-title">Sauvage?</h2>
+				<div class="content">
+					<p>
+						Tout d’abord j’habitais là avant les humains, moi la sauvage ! Puis on m’a mis dehors à coup de bitume et produits phytosanitaires. Mais aujourd’hui, les produits coûtent chers et ne sont pas bons pour la santé des humains, aussi à nous la liberté. Je m’accroche aux chaussures, aux pantalons, aux balais des nettoyeuses,  je vole et je trouve un trou, une fissure, un petit carré d’herbe abandonné, un mur décrépi, et zou ! Je m’installe, moi la petite graine sauvage.
+
+
+					</p>
+					
+				</div>
+			</section>
+			<section>
+				<h2 class="section-title">Réconciliation?</h2>
+				<div class="content">
+					<p>Partez à la découverte de l'étonnante diversité des plantes sauvages qui poussent entre les pavés, grimpent aux murs, sous les haies et rampent sous nos pieds.</p>
+				</div>
+			</section>
+			<section>
+				<h2 class="section-title">Arguments</h2>
+				<div class="content">
+					<p>Allez encore quelques arguments dans le chaudron de « suivez le druide » : </p>
+					<ul>
+						<li>la végétation urbaine participe à la dépollution de l’air et de l’eau ;</li>
+						<li>elle détoxifie les sols, </li>
+						<li>C’est aussi, pour certains citadins, le seul lien avec la nature</li>
+						<li>elle permet d’observer les phénomènes du vivant </li>
+						<li>donc elle nous est précieuse pour notre qualité de vie.</li>
+					</ul>
+				</div>
+			</section>
+		</main>
+
+		<ContactCTA />
+	</div>
+</BaseLayout>
+
+<style>
+	.about {
+		display: flex;
+		flex-direction: column;
+		gap: 3.5rem;
+	}
+
+	img {
+		margin-top: 1.5rem;
+		border-radius: 1.5rem;
+		box-shadow: var(--shadow-md);
+	}
+
+	section {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		color: var(--gray-200);
+	}
+
+	.section-title {
+		grid-column-start: 1;
+		font-size: var(--text-xl);
+		color: var(--gray-0);
+	}
+
+	.content {
+		grid-column: 2 / 4;
+	}
+
+	.content :global(a) {
+		text-decoration: 1px solid underline transparent;
+		text-underline-offset: 0.25em;
+		transition: text-decoration-color var(--theme-transition);
+	}
+
+	.content :global(a:hover),
+	.content :global(a:focus) {
+		text-decoration-color: currentColor;
+	}
+
+	@media (min-width: 50em) {
+		.about {
+			display: grid;
+			grid-template-columns: 1fr 60% 1fr;
+		}
+
+		.about > :global(:first-child) {
+			grid-column-start: 2;
+		}
+
+		section {
+			display: contents;
+			font-size: var(--text-lg);
+		}
+	}
+</style>

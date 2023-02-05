@@ -1,292 +1,249 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Card from "../components/Card.astro";
-import Test from "../components/Test.astro";
-import Supabase from "../components/Supabase.astro";
+import { getCollection } from 'astro:content';
+
+// Layout import — provides basic page elements: <head>, <nav>, <footer> etc.
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Component Imports
+import CallToAction from '../components/CallToAction.astro';
+import Grid from '../components/Grid.astro';
+import Hero from '../components/Hero.astro';
+import Icon from '../components/Icon.astro';
+import Pill from '../components/Pill.astro';
+import PortfolioPreview from '../components/PortfolioPreview.astro';
+
+// Page section components
+import ContactCTA from '../components/ContactCTA.astro';
+import Skills from '../components/Skills.astro';
+
+// Content Fetching: List four most recent work projects
+const projects = (await getCollection('work'))
+	.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+	.slice(0, 4);
+
+// Full Astro Component Syntax:
+// https://docs.astro.build/core-concepts/astro-components/
 ---
 
-<Layout title="Welcome to Astro.">
-	<main>
-		<div class="navbar bg-base-100">
-			<div class="flex-1">
-				<a class="btn btn-ghost normal-case text-xl">Suivez le druide</a
+<BaseLayout>
+	<div class="stack gap-20 lg:gap-48">
+		<div class="wrapper stack gap-8 lg:gap-20">
+			<header class="hero">
+				<Hero
+					title="Sorties Nature en ville"
+					tagline="Les plantes sauvages sont abondantes en ville, elles nous entourent, recèlent de nombreux secrets : élucidons ensemble les mystères des plantes rencontrées, rentrons dans leur vie intime, leur histoire, leurs stratégies pour survivre."
+					align="start"
 				>
-			</div>
-			<div class="flex-none">
-				<div class="dropdown dropdown-end">
-					<label tabindex="0" class="btn btn-ghost btn-circle">
-						<div class="indicator">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								class="h-5 w-5"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-								><path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-								></path>
-							</svg>
-							<span class="badge badge-sm indicator-item">8</span>
-						</div>
-					</label>
-					<div
-						tabindex="0"
-						class="mt-3 card card-compact dropdown-content w-52 bg-base-100 shadow"
-					>
-						<div class="card-body">
-							<span class="font-bold text-lg">8 Items</span>
-							<span class="text-info">Subtotal: $0</span>
-							<div class="card-actions">
-								<button class="btn btn-primary btn-block"
-									>Panier</button
-								>
-							</div>
-						</div>
+					<div class="roles">
+						<a href="/about/"><Pill><Icon icon="code" size="1.33em" /> En savoir +</Pill></a>
+						<a href="/work/"><Pill><Icon icon="microphone-stage" size="1.33em" /> Nos sorties</Pill></a>
+						<a href="/about/"><Pill><Icon icon="pencil-line" size="1.33em" /> Nous contacter</Pill></a>
 					</div>
-				</div>
-				<div class="dropdown dropdown-end">
-					<label tabindex="0" class="btn btn-ghost btn-circle avatar">
-						<div class="w-10 rounded-full">
-							<img src="https://placeimg.com/80/80/people" />
-						</div>
-					</label>
-					<ul
-						tabindex="0"
-						class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
-					>
-						<li>
-							<a class="justify-between">
-								Profile
-								<span class="badge">New</span>
-							</a>
-						</li>
-						<li><a>Settings</a></li>
-						<li><a>Logout</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
+				</Hero>
 
-		<div class="lg:pl-10">
-			<div class="mb-2 py-4 text-center lg:py-10 lg:text-left">
-				<h1
-					class="font-title mb-2 text-4xl font-extrabold sm:text-5xl lg:text-6xl"
-				>
-					Suivez le druide
-				</h1>
-				<h2
-					class="font-title text-lg font-extrabold sm:text-xl lg:text-2xl"
-				>
-					Sorties nature dans la ville d'Annecy
-				</h2>
-			</div>
-			<div
-				class="flex w-full flex-col items-center space-y-10 lg:flex-row lg:items-start lg:space-x-4 lg:space-y-0"
-			>
-				<div class="my-2 flex max-w-sm flex-col gap-2 text-left">
-					<div class="flex gap-2">
-						<svg
-							width="20"
-							height="20"
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							class="inline-block h-6 w-6 stroke-current"
-							><path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-							></path>
-						</svg> Sorties accompagnées
-					</div>
-					<div class="flex gap-2">
-						<svg
-							width="20"
-							height="20"
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							class="inline-block h-6 w-6 stroke-current"
-							><path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-							></path>
-						</svg> Identification des plantes sauvages
-					</div>
-					<div class="flex gap-2">
-						<svg
-							width="20"
-							height="20"
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							class="inline-block h-6 w-6 stroke-current"
-							><path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-							></path>
-						</svg> Détermination des espèces
-					</div>
-					<div class="flex gap-2">
-						<svg
-							width="20"
-							height="20"
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							class="inline-block h-6 w-6 stroke-current"
-							><path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-							></path>
-						</svg> Propriétées et usages
-					</div>
-					<div class="flex gap-2">
-						<svg
-							width="20"
-							height="20"
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							class="inline-block h-6 w-6 stroke-current"
-							><path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-							></path>
-						</svg> Pure CSS. Works on all frameworks
-					</div>
-				</div>
 				<img
-					src="https://placeimg.com/260/200/arch"
-					class="max-w-sm rounded-lg shadow-2xl"
+					alt="Jeanine White smiling in a red plaid shirt and tortoise shell glasses"
+					width="480"
+					height="620"
+					src="/assets/nat2.jpg"
 				/>
-			</div>
-			
-		</div>
-		<svg
-			class="fill-secondary col-start-1 row-start-1 h-auto w-full"
-			width="1600"
-			height="595"
-			viewBox="0 0 1600 595"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-			><path
-				d="M0 338L53.3 349.2C106.7 360.3 213.3 382.7 320 393.8C426.7 405 533.3 405 640 359.3C746.7 313.7 853.3 222.3 960 189.2C1066.7 156 1173.3 181 1280 159.2C1386.7 137.3 1493.3 68.7 1546.7 34.3L1600 0V595H1546.7C1493.3 595 1386.7 595 1280 595C1173.3 595 1066.7 595 960 595C853.3 595 746.7 595 640 595C533.3 595 426.7 595 320 595C213.3 595 106.7 595 53.3 595H0V338Z"
-			></path>
-		</svg>
+			</header>
 
-		<div class="hero min-h-screen min-w-screen bg-base-200">
-			<div class="hero-content flex-col lg:flex-row-reverse">
-				<img
-					src="https://placeimg.com/260/400/arch"
-					class="max-w-sm rounded-lg shadow-2xl"
-				/>
-				<div>
-					<h1 class="text-5xl font-bold">
-						Sortie Nature sur Annecy!
-					</h1>
-					<p class="py-6">
-						Venez apprendre à reconnaitre les petites plantes que
-						nous croisont tous les jours sur nos trottoirs! Elles
-						deviendront vites vos amies !
-					</p>
-					<button class="btn btn-primary">En savoir +</button>
+			<Skills />
+		</div>
+
+		<main class="wrapper stack gap-20 lg:gap-48">
+			<section class="section with-background with-cta">
+				<header class="section-header stack gap-2 lg:gap-4">
+					<h3>Nos sorties</h3>
+					<p>Les parcours proposés sont sans difficulté particulière : nul besoin de serpette, ni de grimper aux arbres… des yeux, des oreilles et de la curiosité sont requis!</p>
+				</header>
+
+				<div class="gallery">
+					<Grid variant="offset">
+						{
+							projects.map((project) => (
+								<li>
+									<PortfolioPreview project={project} />
+								</li>
+							))
+						}
+					</Grid>
 				</div>
-			</div>
-		</div>
 
-		<div class="flex flex-auto space-x-10">
-			<div class="card w-96 bg-base-100 shadow-xl">
-				<figure>
-					<img src="https://placeimg.com/400/225/arch" alt="murs" />
-				</figure>
-				<div class="card-body">
-					<h2 class="card-title">Plantes des murs!</h2>
+				<div class="cta">
+					<CallToAction href="/work/">
+						Voir tout
+						<Icon icon="arrow-right" size="1.2em" />
+					</CallToAction>
+				</div>
+			</section>
+
+			<section class="section with-background bg-variant">
+				<header class="section-header stack gap-2 lg:gap-4">
+					<h3>Sorties à venir</h3>
 					<p>
-						Venez découvrir les plantes qui poussent sur les murs de
-						la vieille ville
+						Les dates et lieux à venir, rendez-vous sur notre AGENDA
 					</p>
-					<div class="card-actions justify-end">
-						<button class="btn btn-primary">Réserver</button>
-					</div>
-				</div>
-			</div>
-			<div class="card w-96 bg-base-100 shadow-xl">
-				<figure>
-					<img src="https://placeimg.com/400/225/arch" alt="Thiou" />
-				</figure>
-				<div class="card-body">
-					<h2 class="card-title">Plantes des bords d'eau!</h2>
-					<p>
-						Venez découvrir les plantes qui poussent sur les berges
-						du Thiou
-					</p>
-					<div class="card-actions justify-end">
-						<button class="btn btn-primary">En savoir +</button>
-					</div>
-				</div>
-			</div>
-		</div>
+				</header>
 
-		
-	</main>
+				<div class="gallery">
+					<Grid variant="small">
+						{
+							['Medium', 'BuzzFeed', 'The Next Web', 'awwwards.', 'TechCrunch'].map((brand) => (
+								<li class="mention-card">
+									<p>{brand}</p>
+								</li>
+							))
+						}
+					</Grid>
+				</div>
+			</section>
+		</main>
 
-	<Supabase />
-</Layout>
+		<ContactCTA />
+	</div>
+</BaseLayout>
 
 <style>
-	main {
-		margin: auto;
-		padding: 1.5rem;
-		max-width: 100ch;
+	.hero {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 2rem;
 	}
-	h1 {
-		font-size: 3rem;
-		font-weight: 800;
-		margin: 0;
+
+	.roles {
+		display: none;
 	}
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
+
+	.hero img {
+		aspect-ratio: 5 / 4;
+		object-fit: cover;
+		object-position: top;
+		border-radius: 1.5rem;
+		box-shadow: var(--shadow-md);
 	}
-	.instructions {
-		line-height: 1.6;
-		margin: 1rem 0;
-		border: 1px solid rgba(var(--accent), 25%);
-		background-color: white;
-		padding: 1rem;
-		border-radius: 0.4rem;
+
+	@media (min-width: 50em) {
+		.hero {
+			display: grid;
+			grid-template-columns: 6fr 4fr;
+			padding-inline: 2.5rem;
+			gap: 3.75rem;
+		}
+
+		.roles {
+			margin-top: 0.5rem;
+			display: flex;
+			gap: 0.5rem;
+		}
+
+		.hero img {
+			aspect-ratio: 3 / 4;
+			border-radius: 4.5rem;
+			object-fit: cover;
+		}
 	}
-	.instructions code {
-		font-size: 0.875em;
-		font-weight: bold;
-		background: rgba(var(--accent), 12%);
-		color: rgb(var(--accent));
-		border-radius: 4px;
-		padding: 0.3em 0.45em;
-	}
-	.instructions strong {
-		color: rgb(var(--accent));
-	}
-	.link-card-grid {
+
+	/* ====================================================== */
+
+	.section {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-		gap: 1rem;
-		padding: 0;
+		gap: 2rem;
+	}
+
+	.with-background {
+		position: relative;
+	}
+
+	.with-background::before {
+		--hero-bg: var(--bg-image-subtle-2);
+
+		content: '';
+		position: absolute;
+		pointer-events: none;
+		left: 50%;
+		width: 100vw;
+		aspect-ratio: calc(2.25 / var(--bg-scale));
+		top: 0;
+		transform: translateY(-75%) translateX(-50%);
+		background: url('/assets/backgrounds/noise.png') top center/220px repeat,
+			var(--hero-bg) center center / var(--bg-gradient-size) no-repeat, var(--gray-999);
+		background-blend-mode: overlay, normal, normal, normal;
+		mix-blend-mode: var(--bg-blend-mode);
+		z-index: -1;
+	}
+
+	.with-background.bg-variant::before {
+		--hero-bg: var(--bg-image-subtle-1);
+	}
+
+	.section-header {
+		justify-self: center;
+		text-align: center;
+		max-width: 50ch;
+		font-size: var(--text-md);
+		color: var(--gray-300);
+	}
+
+	.section-header h3 {
+		font-size: var(--text-2xl);
+	}
+
+	@media (min-width: 50em) {
+		.section {
+			grid-template-columns: repeat(4, 1fr);
+			grid-template-areas: 'header header header header' 'gallery gallery gallery gallery';
+			gap: 5rem;
+		}
+
+		.section.with-cta {
+			grid-template-areas: 'header header header cta' 'gallery gallery gallery gallery';
+		}
+
+		.section-header {
+			grid-area: header;
+			font-size: var(--text-lg);
+		}
+
+		.section-header h3 {
+			font-size: var(--text-4xl);
+		}
+
+		.with-cta .section-header {
+			justify-self: flex-start;
+			text-align: left;
+		}
+
+		.gallery {
+			grid-area: gallery;
+		}
+
+		.cta {
+			grid-area: cta;
+		}
+	}
+
+	/* ====================================================== */
+
+	.mention-card {
+		display: flex;
+		height: 7rem;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+		border: 1px solid var(--gray-800);
+		border-radius: 1.5rem;
+		color: var(--gray-300);
+		background: var(--gradient-subtle);
+		box-shadow: var(--shadow-sm);
+	}
+
+	@media (min-width: 50em) {
+		.mention-card {
+			border-radius: 1.5rem;
+			height: 9.5rem;
+		}
 	}
 </style>
